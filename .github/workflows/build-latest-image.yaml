@@ -23,12 +23,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Login to Registry
-      run: docker login --username=${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_PASSWORD }}
     - name: Create Buildx
       run: docker buildx create --name mybuilder --use
     - name: Build
       run: docker buildx build --platform linux/arm64,linux/amd64 -t rockchin/campuxutility:latest
+    - name: Save Image
+      run: docker save rockchin/campuxutility:latest -o image.tar
+    - uses: actions/upload-artifact@v2
+      with:
+        name: docker-image
+        path: image.tar
 
     - name: Push Finish Notification
       run: |
