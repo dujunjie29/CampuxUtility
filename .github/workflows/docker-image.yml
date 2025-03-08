@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'src/**'
+      - '.github/workflows/build-latest-image.yaml'
+      - 'main.py'
+  workflow_dispatch:
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker buildx build --platform linux/arm64,linux/amd64 -t djj/campuxutility:latest
+    - name: Save Image
+      run: docker save djj/campuxutility:latest -o image.tar
+    - uses: actions/upload-artifact@v4
+      with:
+        name: docker-image
+        path: image.tar
