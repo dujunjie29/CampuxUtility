@@ -28,7 +28,7 @@ jobs:
     - name: Create Buildx
       run: docker buildx create --name mybuilder --use
     - name: Build
-      run: docker buildx build --platform linux/arm64,linux/amd64 -t rockchin/campuxutility:latest . --push
+      run: docker buildx build --platform linux/arm64,linux/amd64 -t rockchin/campuxutility:latest
 
     - name: Push Finish Notification
       run: |
