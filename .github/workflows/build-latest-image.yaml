@@ -22,7 +22,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
     - name: Create Buildx
       run: docker buildx create --name mybuilder --use
     - name: Build
