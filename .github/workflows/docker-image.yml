@@ -25,4 +25,10 @@ jobs:
     - name: Build the Docker image
       run: docker buildx create --name mybuilder --use
     - name: Build
-      run: docker buildx build --platform linux/arm64,linux/amd64 -t dd/campuxutility:latest . --push
+      run: docker buildx build --platform linux/arm64,linux/amd64 -t dd/campuxutility:latest
+    - name: Save Image
+      run: docker save dd/campuxutility:latest -o image.tar
+    - uses: actions/upload-artifact@v4
+      with:
+        name: docker-image
+        path: image.tar
