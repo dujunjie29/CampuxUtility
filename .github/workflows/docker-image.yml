@@ -25,7 +25,7 @@ jobs:
     - name: Build the Docker image
       run: docker buildx create --name mybuilder --use
     - name: Build
-      run: docker buildx build --output=type=docker --platform linux/arm64,linux/amd64 -t dd/campuxutility:latest --load .
+      run: docker buildx build --output=type=docker --platform linux/amd64 -t dd/campuxutility:latest --load .
     - name: Save Image
       run: docker save dd/campuxutility:latest -o image.tar
     - uses: actions/upload-artifact@v4
